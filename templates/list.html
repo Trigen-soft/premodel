@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block header %}
+{% endblock header %}
+{% block content %}
+
+<div class="container">
+    <a href="{% url 'logout' %}" >ログアウトする</a>
+    <a href="{% url 'create' %}" >作成する</a>
+    {% for item in object_list %}
+    <div class="card">
+          <h3 class="card-header" color='blue'>{{ item.title }}</h3>
+          <h3 class="card-title">投稿者:{{ item.author }}</h3>
+          <p class="card-text">{{ item.content }}</p>
+          <h3 class="card-title">いいねの数{{ item.useful_review }}</h3>
+          <a href="{% url 'detail' item.pk %}" >詳細を見る</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

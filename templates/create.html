@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<form method='POST' enctype='multipart/form-data'>{% csrf_token %}
+    <p>記入者:<input type='text' name='title'></p>
+    <p>事業利益(万):<input type='number' name='Revenue'></p>
+    <p>日付選択してください。!!現在灰色のままでは送信できません!!</p>
+    <input type='date' name='Date' value= today >
+    <input type='hidden' name='author' value='{{ user.id }}'>
+    <input type='submit' name='',value='作成する'>
+</form>
+{% else %}
+ログインしてください。
+<a href="{% url 'login' %}" class='btn btn-primary' role='button' aria-pressed="true">ログイン</a>
+{% endif %}
+{% endblock content %}

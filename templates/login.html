@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+<div class='container'>
+    <form class='form-signin' method='POST'>{% csrf_token %}
+      <h1 class="h3 mb-3 fw-normal">ログイン</h1>
+      {% if error %}
+      {{ error }}
+      {% endif %}
+      <div class="form-floating">
+        <input type="text" class="form-control" id="inputUsername" name='username_data' placeholder="username">
+        <label for="inputUsername">Username</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="inputPassword" name='password_data' placeholder="password">
+        <label for="inputPassword">Password</label>
+      </div>
+  
+      <button class="w-100 btn btn-lg btn-primary" type="submit">GO page</button>
+    </form>
+</div>
+<div class='container'>
+<a href="{% url 'signup' %}">ユーザー登録</a>
+</div>
+{% endblock content %}
