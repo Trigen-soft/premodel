@@ -1,4 +1,5 @@
 from turtle import width
+from unicodedata import name
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.db import IntegrityError
@@ -13,7 +14,10 @@ import plotly.graph_objects as go
 from plotly.offline import plot
 import plotly.express as px
 import datetime
-
+from pandas_datareader import data
+import pandas as pd
+from plotly.offline import plot
+import numpy as np
 
 def signupview(request):
     if request.method == 'POST':
@@ -80,3 +84,17 @@ class creatclass(CreateView):
     today=datetime.date.today()
     fields=('title','Date','Revenue','author')
     success_url=reverse_lazy('graph')
+
+def stock(request):
+    start = "2021-01-01"
+    end = "2021-12-31"
+    code="TSLA"
+    apikey="E5HBS439W6ESE9LT"
+    df=data.DataReader(code,'av-daily',start,end,api_key=apikey)
+    date=df.index
+    price=df['close']
+    fig=go.Figure()
+    fig.add_trace(go.Scatter(x=date,y=price,mode='lines',name='Tesla'))
+    fig.update_layout(title="<b>The price of Tesla's stock",xaxis=dict(title='日付'),yaxis=dict(title='株価($)'))
+    plot_fig=plot(fig, output_type='div', include_plotlyjs=False)
+    return render(request, 'index.html',{'graph':plot_fig})
